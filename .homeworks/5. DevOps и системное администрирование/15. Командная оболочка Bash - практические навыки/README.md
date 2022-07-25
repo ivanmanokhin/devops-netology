@@ -41,9 +41,9 @@ do
 	if (($? != 0))
 	then
 		date >> curl.log
-	fi
 	else
 		break
+	fi
 done
 ```
 В цикле while отсутствовала скобка, добавил условие (else) выхода из цикла.  
