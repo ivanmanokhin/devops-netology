@@ -58,10 +58,10 @@ ipArray=( '192.168.0.1' '173.194.222.113' '87.250.250.242' )
 
 for (( i=1; i <= 5; i++ ))
 do
-    for ip in "${ipArray[@]}"
-    do
-        echo "[$(date)] Connection to $ip 80 port [tcp/http] $(nc -z -w 3 $ip 80 &> /dev/null && echo succeeded || echo failed)" >> log
-    done
+	for ip in "${ipArray[@]}"
+	do
+		echo "[$(date)] Connection to $ip 80 port [tcp/http] $(nc -z -w 3 $ip 80 &> /dev/null && echo succeeded || echo failed)" >> log
+	done
 done
 ```
 Для удобства создан массив с IP-адресами.  
@@ -78,16 +78,16 @@ ipArray=( '192.168.0.1' '173.194.222.113' '87.250.250.242' )
 
 for (( i=1; i <= 5; i++ ))
 do
-    for ip in "${ipArray[@]}"
-    do
-        if ! nc -z -w 3 "$ip" 80
+	for ip in "${ipArray[@]}"
+	do
+		if ! nc -z -w 3 "$ip" 80
 		then
-            echo "[$(date)] Connection to $ip 80 port [tcp/http] echo failed" >> error
-            exit 1
-        else
-            echo "[$(date)] Connection to $ip 80 port [tcp/http] echo succeeded" >> log
-        fi
-    done
+			echo "[$(date)] Connection to $ip 80 port [tcp/http] echo failed" >> error
+			exit 1
+		else
+			echo "[$(date)] Connection to $ip 80 port [tcp/http] echo succeeded" >> log
+		fi
+	done
 done
 ```
 При коде возврата != 0, лог пишется в error, после этого скрипт завершается через exit 1.  
@@ -105,8 +105,8 @@ error_msg="Aborting commit. Your commit message is wrong."
 
 if ! grep -iqP "$regex" "$1"
 	then
-    	echo "$error_msg" >&2
-    	exit 1
+		echo "$error_msg" >&2
+		exit 1
 fi
 ```
 Не уверен, что сделал то, что требовалось. Регулярное выражение, которое проверяет наличие квадратных скобок и общую длину сообщения от 10 до 30 символов.  
