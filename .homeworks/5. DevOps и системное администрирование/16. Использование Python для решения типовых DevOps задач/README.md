@@ -173,7 +173,7 @@ if __name__ == '__main__':
     else:
         get_ip(args.hosts) # запуск функции с получением IP-адресов
 ```
-В принципе все описал в комментариях к коду  
+В принципе все описал в комментариях к коду.  
 
 ### Вывод скрипта при запуске при тестировании:
 ```
@@ -211,7 +211,7 @@ File ./results.json does not exist
 #!/usr/bin/env python3
 
 import click # для парсинга аргументов
-from git import # для работы с git'ом
+from git import Repo # для работы с git'ом
 import json
 import requests
 
