@@ -226,12 +226,12 @@ def git_push(repo, msg, br):
 def create_pull_request(cred, br, rqst):
     '''Функция для отправки pull request (через API GitHub)'''
     with open(cred, 'r') as file:
-        # открытие файла с названием репозитория, владельцем и токеном. Присваивание значения переменным
+        # открытие файла с названием репозитория, владельцем и токеном. присваивание значения переменным
         _dict = json.loads(file.read())
         repo = _dict['repo']
         owner = _dict['owner']
         token = 'token ' + _dict['token']
-    url=f'https://api.github.com/repos/{owner}/{repo}/pulls'
+    url = f'https://api.github.com/repos/{owner}/{repo}/pulls'
     headers = {'Authorization': token, 'Content-Type': 'application/json'} # заголовки для POST-запроса
     data = {'title': rqst, 'base': 'main', 'head': br} # полезная нагрузка)
     response = requests.post(url, headers=headers, data=json.dumps(data)) # POST-запрос к API GitHub
@@ -265,7 +265,18 @@ if __name__ == '__main__':
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-./git-script.py --path test-git/ --cred cred.json --msg "T3ST COMMIT" --br NEW-T3ST-BRANCH --rqst "T3ST REQUEST TITLE"
+root@c44296d75f36:~# ./git-script.py --help
+Usage: git-script.py [OPTIONS]
+
+Options:
+  --path PATH  Path to repository  [required]
+  --cred PATH  Path to credentials file  [required]
+  --msg TEXT   Commit message  [required]
+  --br TEXT    New branch name  [required]
+  --rqst TEXT  Request title  [required]
+  --help       Show this message and exit.
+
+root@c44296d75f36:~# ./git-script.py --path test-git/ --cred cred.json --msg "T3ST COMMIT" --br NEW-T3ST-BRANCH --rqst "T3ST REQUEST TITLE"
 Push was successful
 Pull request successfully created
 ```
