@@ -1,4 +1,5 @@
-# devops-netology
+# Курс "DevOps-инженер"
+![header](/.assets/images/header.png)
 
 ---
 Следующие файлы и директории будут проигнорированы:  
