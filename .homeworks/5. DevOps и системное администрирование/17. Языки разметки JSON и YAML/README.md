@@ -266,7 +266,7 @@ if __name__ == '__main__':
 
 ### Пример работы скрипта:
 ```
-[manokhin@DESKTOP-GO8BBM0:~()]>./convert.py --file example.json
+root@c03e1f0b3400:/# ./convert.py --file example.json
 Trying to open as JSON...
 Successfully
 Convert file to YAML...
