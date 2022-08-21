@@ -35,6 +35,7 @@
     sudo systemctl daemon-reload
     sudo systemctl enable --now node_exporter
 
+    sudo systemctl status node_exporter
     ● node_exporter.service - Node Exporter
      Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor preset: enabled)
      Active: active (running) since Sun 2022-08-21 18:40:34 UTC; 3s ago
