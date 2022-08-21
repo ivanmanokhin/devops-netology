@@ -104,7 +104,7 @@
 
     **Ответ:** Функция, которая рекурсивно запускает процессы (сначала два, в каждом еще 2 и т.д.)  
     В логах: `cgroup: fork rejected by pids controller in /user.slice/user-1000.slice/session-3.scope`  
-    Механизм: Process Number Controller -  позволить cgroup остановить создание новых процессов fork() или clone() после достижения предела.
+    Механизм: Process Number Controller -  позволить cgroup остановить создание новых процессов fork() или clone() после достижения предела.  
     Проверить текущее количество процессов на пользователя: `ulimit -u`  
     ```
     root@vagrant:~# ulimit -u
