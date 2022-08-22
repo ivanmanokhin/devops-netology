@@ -22,7 +22,7 @@
     [Service]
     User=exporters
     EnvironmentFile=/opt/exporters/node_exporter_env
-    ExecStart=/opt/exporters/node_exporter-1.3.1.linux-amd64/node_exporter  {$ENV_OPTION_1}
+    ExecStart=/opt/exporters/node_exporter-1.3.1.linux-amd64/node_exporter {$ENV_OPTION_1}
 
     [Install]
     WantedBy=default.target
@@ -106,7 +106,7 @@
     **Ответ:** Функция, которая рекурсивно запускает процессы (сначала два, в каждом еще 2 и т.д.)  
     В логах: `cgroup: fork rejected by pids controller in /user.slice/user-1000.slice/session-3.scope`  
     Механизм: Process Number Controller -  позволить cgroup остановить создание новых процессов fork() или clone() после достижения предела.  
-    Проверить текущее количество процессов на пользователя: `ulimit -u`  
+    Проверить текущее количество процессов на пользователя: `ulimit -u`:  
     ```
     root@vagrant:~# ulimit -u
     7597
