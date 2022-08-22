@@ -67,5 +67,5 @@ HOST: stackoverflow.com
 
 8. Проверьте PTR записи для IP адресов из задания 7. Какое доменное имя привязано к IP? воспользуйтесь утилитой `dig`
 
-    **Ответ:** dns.google.
+    **Ответ:** dns.google.  
     ![](./assets/../.assets/images/ptr.png)  
