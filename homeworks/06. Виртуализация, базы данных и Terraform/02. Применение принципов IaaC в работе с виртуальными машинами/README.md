@@ -36,7 +36,8 @@
 `vagrant plugin install vagrant-hostmanager`
 
 Hyper-V Version:
-```
+
+```powershell
 PS G:\vagrant-project> $fpath = "c:\windows\system32\vmms.exe"
 PS G:\vagrant-project> [System.Diagnostics.FileVersionInfo]::GetVersionInfo($fpath) | Format-List -property *
 
@@ -72,7 +73,8 @@ SpecialBuild       :
 ```
 
 Vagrant Version:
-```
+
+```bash
 [manokhin@DESKTOP:.../vagrant()]vagrant version
 
 Installed Version: 2.3.0
@@ -82,7 +84,8 @@ You're running an up-to-date version of Vagrant!
 ```
 
 Ansible Version:
-```
+
+```bash
 ansible --version
 
 (ansible-6.3) [manokhin@DESKTOP:.../vagrant()]ansible [core 2.13.3]
@@ -107,7 +110,7 @@ docker ps
 
 **Ответ:**
 
-```
+```bash
 (ansible-6.3) [manokhin@DESKTOP:.../vagrant()]vagrant up                                                                                                                                                                    
 Bringing machine 'server1.netology' up with 'hyperv' provider...
 ==> server1.netology: Verifying Hyper-V is enabled...
