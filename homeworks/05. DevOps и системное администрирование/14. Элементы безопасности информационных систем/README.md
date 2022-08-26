@@ -3,23 +3,23 @@
 1. Установите Bitwarden плагин для браузера. Зарегестрируйтесь и сохраните несколько паролей.
 
     **Ответ:**  
-    ![](./.assets/images/bitwarder.png)
+    ![](assets/images/bitwarder.png)
 
 2. Установите Google authenticator на мобильный телефон. Настройте вход в Bitwarden акаунт через Google authenticator OTP.
 
     **Ответ:**  
-    ![](./.assets/images/OTP.png)
+    ![](assets/images/OTP.png)
 
 3. Установите apache2, сгенерируйте самоподписанный сертификат, настройте тестовый сайт для работы по HTTPS.
 
     **Ответ:**  
-    ```
+    ```bash
     sudo apt install apache2
     sudo a2enmod ssl
     sudo systemctl restart apache2
     ```
     Bash-скрипт для создания сертификата:
-    ```
+    ```bash
     #!/usr/bin/env bash
 
     fqdn=$1
@@ -44,7 +44,7 @@
     -subj "/C=$C/ST=$ST/L=$L/O=$O/OU=$OU/CN=$fqdn"
     ```
     Генерация сертификата:
-    ```
+    ```bash
     vagrant@ubuntu-0:~$ chmod +x ssl-generate.sh
     vagrant@ubuntu-0:~$ sudo ./ssl-generate.sh example.com
     + C=RU
@@ -72,28 +72,28 @@
     </VirtualHost>
     ```
     Создание HTML-страницы:
-    ```
+    ```bash
     sudo mkdir /var/www/example.com; sudo sh -c "echo '<h1>TEST PAGE</h1>' > /var/www/example.com/index.html"
     ```
     Перезапуск apache2:
-    ```
+    ```bash
     sudo systemctl reload apache2
     ```
     Проверка 443 TCP-порта:  
-    ![](./.assets/images/ss-tcp.png)
+    ![](assets/images/ss-tcp.png)
     Открытие сайта в браузере:  
-    ![](./.assets/images/https.png)
+    ![](assets/images/https.png)
 
 4. Проверьте на TLS уязвимости произвольный сайт в интернете (кроме сайтов МВД, ФСБ, МинОбр, НацБанк, РосКосмос, РосАтом, РосНАНО и любых госкомпаний, объектов КИИ, ВПК ... и тому подобное).
 
     **Ответ:**  
-    ![](./.assets/images/testssl.png)
+    ![](assets/images/testssl.png)
 
 
 5. Установите на Ubuntu ssh сервер, сгенерируйте новый приватный ключ. Скопируйте свой публичный ключ на другой сервер. Подключитесь к серверу по SSH-ключу.
 
     **Ответ:**  
-    ```
+    ```bash
     sudo apt install openssh-server
     ssh-keygen -b 4096 -q -N "" -f $HOME/.ssh/id_rsa
     ssh-copy-id vagrant@10.0.0.2
@@ -103,7 +103,7 @@
 6. Переименуйте файлы ключей из задания 5. Настройте файл конфигурации SSH клиента, так чтобы вход на удаленный сервер осуществлялся по имени сервера.
 
     **Ответ:**  
-    ```
+    ```bash
     sudo apt install rename
     rename -v s/id_rsa/id_vagrant/ id_rsa*
 
@@ -121,4 +121,4 @@
 7. Соберите дамп трафика утилитой tcpdump в формате pcap, 100 пакетов. Откройте файл pcap в Wireshark.
 
     **Ответ:** `sudo tcpdump -c 100 -w dump.pcap -i eth0`  
-    ![](./.assets/images/wireshark.png)
+    ![](assets/images/wireshark.png)
