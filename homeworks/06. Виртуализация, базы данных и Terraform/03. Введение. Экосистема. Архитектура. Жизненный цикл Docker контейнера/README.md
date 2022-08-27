@@ -109,7 +109,7 @@ docker exec -it centos bash
 
 vagrant@server1:~$ echo "I'm Ubuntu VM" > data/ubuntu.txt
 
-vagrant@server1:~$ docker exec -t ubuntu sh -c "ls -al /data; cat /data/*"
+vagrant@server1:~$ docker exec ubuntu sh -c "ls -al /data; cat /data/*"
 total 16
 drwxrwxr-x 2 1000 1000 4096 Aug 27 12:13 .
 drwxr-xr-x 1 root root 4096 Aug 27 12:13 ..
