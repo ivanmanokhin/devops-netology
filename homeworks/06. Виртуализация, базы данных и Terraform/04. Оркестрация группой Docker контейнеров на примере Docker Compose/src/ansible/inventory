@@ -1,0 +1,6 @@
+[nodes:children]
+manager
+worker
+
+[manager]
+node01.netology.cloud ansible_host=51.250.14.11
