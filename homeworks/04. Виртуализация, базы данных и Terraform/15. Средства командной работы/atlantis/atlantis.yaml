@@ -1,0 +1,21 @@
+version: 3
+automerge: true
+parallel_plan: true
+parallel_apply: true
+
+projects:
+- dir: ./terraform
+  name: stage
+  workspace: stage
+  autoplan:
+    enabled: true
+    when_modified:
+      - "*.tf"
+
+- dir: ./terraform
+  name: prod
+  workspace: prod
+  autoplan:
+    enabled: true
+    when_modified:
+      - "*.tf"
