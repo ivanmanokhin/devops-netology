@@ -1,0 +1,6 @@
+node.name: netology_test
+xpack.security.enabled: false
+path.data: /var/lib/elasticsearch
+discovery.type: single-node
+http.host: 0.0.0.0
+path.repo: /elasticsearch/snapshots
