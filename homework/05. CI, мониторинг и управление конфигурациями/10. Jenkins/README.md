@@ -690,7 +690,7 @@
 
 	#### Результат:
 
-	Добавил параметр becomePassword для ansible (передается через `extra-vars`), без этого не запускалось (костыльный вариант конечно):
+	Добавил параметр becomePassword для ansible (передается через `extra-vars`), без прав sudo не работало:
 
 	![](./assets/images/jenkins_param_2.png)
 
