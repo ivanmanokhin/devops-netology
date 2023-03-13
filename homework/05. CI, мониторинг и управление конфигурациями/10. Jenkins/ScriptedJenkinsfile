@@ -1,0 +1,14 @@
+node("linux"){
+    def becomePassword = params.becomePassword
+    stage("Git checkout"){
+        git credentialsId: '0ed4dcfd-6cd3-47c0-bfcc-b01f0149a411', url: 'git@github.com:aragastmatb/example-playbook.git'
+    }
+    stage("Run playbook"){
+        if (params.prod_run){
+            sh 'ansible-playbook site.yml -i inventory/prod.yml --extra-vars "ansible_become_pass=${becomePassword}"'
+        }
+        else{
+            sh 'ansible-playbook site.yml -i inventory/prod.yml --check --diff --extra-vars "ansible_become_pass=${becomePassword}"'
+        }
+    }
+}
