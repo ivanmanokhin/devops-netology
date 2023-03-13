@@ -769,6 +769,6 @@
 
 	#### Результат:
 
-	[vector-role with Jankinsfile (Declarative Pipeline)](https://github.com/ivanmanokhin/vector-role/tree/1.3.1)
+	[vector-role with Jenkinsfile (Declarative Pipeline)](https://github.com/ivanmanokhin/vector-role/tree/1.3.1)
 
 	[Scripted Pipeline](./ScriptedJenkinsfile)
