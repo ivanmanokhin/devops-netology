@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  namespace: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      namespace: api
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: api
+          image: cr.yandex/crp6atogbsup38onrgcu/api:__VERSION__
+          imagePullPolicy: Always
