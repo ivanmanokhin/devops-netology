@@ -1,0 +1,117 @@
+---
+- name: deploy monitoring stack
+  hosts: mon
+  become: true
+  tasks:
+  - name: install docker
+    block:
+      - name: install yum-utils
+        ansible.builtin.yum:
+          name: yum-utils
+
+      - name: add docker repository
+        ansible.builtin.get_url:
+          url: https://download.docker.com/linux/centos/docker-ce.repo
+          dest: /etc/yum.repos.d/docker-ce.repo
+
+      - name: install docker engine
+        ansible.builtin.yum:
+          name:
+            - docker-ce
+            - docker-ce-cli
+            - containerd.io
+            - docker-buildx-plugin
+            - docker-compose-plugin
+          state: present
+          update_cache: true
+
+      - name: start docker service
+        ansible.builtin.service:
+          name: docker
+          state: started
+
+      - name: install python docker
+        ansible.builtin.pip:
+          name:
+            - docker
+    tags: prepare
+
+  - name: deploy monitoring stack
+    block:
+      - name: create directory for prometheus.yml
+        ansible.builtin.file:
+          path: /etc/prometheus
+          state: directory
+
+      - name: generate prometheus config
+        ansible.builtin.template:
+          src: template/prometheus.yml.j2
+          dest: /etc/prometheus/prometheus.yml
+
+      - name: create monitoring network
+        community.docker.docker_network:
+          name: monitoring
+
+      - name: create docker volumes
+        community.docker.docker_volume:
+          name: '{{ item }}'
+        loop:
+          - prometheus_data
+          - grafana_data
+
+      - name: deploy prometheus
+        community.docker.docker_container:
+          name: prometheus
+          image: prom/prometheus:v2.43.0
+          recreate: false
+          restart_policy: unless-stopped
+          volumes:
+             - /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+             - prometheus_data:/prometheus
+          networks:
+            - name: monitoring
+          ports:
+            - '9090:9090'
+          command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+            - '--storage.tsdb.path=/prometheus'
+            - '--web.console.libraries=/etc/prometheus/console_libraries'
+            - '--web.console.templates=/etc/prometheus/consoles'
+            - '--web.enable-lifecycle'
+
+      - name: deploy node-exporter
+        community.docker.docker_container:
+          name: node-exporter
+          image: prom/node-exporter:v1.5.0
+          recreate: false
+          restart_policy: unless-stopped
+          volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+            - /:/rootfs:ro
+          networks:
+            - name: monitoring
+          ports:
+            - '9100:9100'
+          command:
+            - '--path.procfs=/host/proc'
+            - '--path.rootfs=/rootfs'
+            - '--path.sysfs=/host/sys'
+            - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+
+      - name: deploy grafana
+        community.docker.docker_container:
+          name: grafana
+          image: grafana/grafana:9.2.15
+          recreate: false
+          restart_policy: unless-stopped
+          volumes:
+            - grafana_data:/var/lib/grafana
+          networks:
+            - name: monitoring
+          ports:
+           - '3000:3000'
+          env:
+            GF_SECURITY_ADMIN_USER: '{{ grafana_user }}'
+            GF_SECURITY_ADMIN_PASSWORD: '{{ grafana_password }}'
+    tags: deploy
