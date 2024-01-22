@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-web-with-init
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+          name: nginx
+          protocol: TCP
+      initContainers:
+      - name: init-bb
+        image: busybox:latest
+        command: ['sh', '-c', 'until nslookup svc-web-with-init.default.svc.cluster.local; do echo waiting for svc-web-with-init; sleep 1; done;']
