@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-web-nodeport
+spec:
+  selector:
+    app: web
+  ports:
+    - name: http-nginx
+      targetPort: nginx
+      port: 80
+      nodePort: 30001
+  type: NodePort
