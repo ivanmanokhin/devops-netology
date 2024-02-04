@@ -14,7 +14,7 @@
 
 ## Результат
 
-1. Создание Deployment с nginx и multitul (3 реплики) и создание сервиса с указанием необходимых таргет портов.
+1. Создание Deployment с nginx и multitul (3 реплики) и создание сервиса с указанием необходимых таргет портов.  
     [Манифест деплоймента и сервиса](./01_dpl_svc-web.yaml)
     ```bash
     user@local:~$ kubectl apply -f /tmp/01_dpl_svc-web.yaml 
@@ -116,7 +116,7 @@
 
 ## Результат
 
-1. Создание сервиса с типом NodePort.
+1. Создание сервиса с типом NodePort.  
     [Манифест сервиса](./02_svc_nodeport-web.yaml)
     ```bash
     user@local:~$ kubectl apply -f /tmp/02_svc_nodeport-web.yaml 
