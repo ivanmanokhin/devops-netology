@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-bb
+  labels:
+    app: bb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bb
+  template:
+    metadata:
+      labels:
+        app: bb
+    spec:
+      containers:
+        - name: busybox
+          image: busybox
+          command: ['sh', '-c', 'while true; do echo `date` ping >> /input/log; sleep 5; done;']
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /input
+        - name: multitool
+          image: wbitt/network-multitool
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /output
+      volumes:
+        - name: shared-volume
+          emptyDir: {}

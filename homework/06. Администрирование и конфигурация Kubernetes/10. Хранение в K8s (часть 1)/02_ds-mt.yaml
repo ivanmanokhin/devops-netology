@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ds-mt
+  labels:
+    app: mt
+spec:
+  selector:
+    matchLabels:
+      app: mt
+  template:
+    metadata:
+      labels:
+        app: mt
+    spec:
+      containers:
+        - name: multitool
+          image: wbitt/network-multitool
+          volumeMounts:
+            - name: node-syslog
+              mountPath: /node-syslog
+      volumes:
+        - name: node-syslog
+          hostPath:
+            path: /var/log/syslog
