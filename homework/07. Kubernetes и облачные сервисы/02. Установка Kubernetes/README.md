@@ -1421,12 +1421,13 @@
     vagrant@k8s-master01:~$ kubectl cluster-info
     Kubernetes control plane is running at https://lb-apiserver.kubernetes.local:8443
 
+    To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
     vagrant@k8s-master01:~$ ping lb-apiserver.kubernetes.local
     PING lb-apiserver.kubernetes.local (192.168.0.198) 56(84) bytes of data.
     64 bytes from lb-apiserver.kubernetes.local (192.168.0.198): icmp_seq=1 ttl=64 time=0.123 ms
     64 bytes from lb-apiserver.kubernetes.local (192.168.0.198): icmp_seq=2 ttl=64 time=0.109 ms
 
-    To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
     vagrant@k8s-master01:~$ kubectl get nodes -o wide
     NAME           STATUS   ROLES           AGE   VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
     k8s-master01   Ready    control-plane   18m   v1.29.1   192.168.0.124   <none>        Ubuntu 20.04.6 LTS   5.4.0-148-generic   containerd://1.7.13
