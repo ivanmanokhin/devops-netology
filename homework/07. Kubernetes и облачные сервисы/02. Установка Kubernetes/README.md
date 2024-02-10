@@ -1328,9 +1328,9 @@
              mode tcp
              option ssl-hello-chk
              balance     roundrobin
-                 server k8s-node01 192.168.0.124:6443 check
-                 server k8s-node02 192.168.0.125:6443 check
-                 server k8s-node03 192.168.0.126:6443 check
+                 server k8s-master01 192.168.0.124:6443 check
+                 server k8s-master02 192.168.0.125:6443 check
+                 server k8s-master03 192.168.0.126:6443 check
          ```
       </details>
     * Запускаем службы:
