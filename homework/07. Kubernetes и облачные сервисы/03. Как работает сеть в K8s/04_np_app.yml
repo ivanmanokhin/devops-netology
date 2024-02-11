@@ -1,0 +1,41 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-backend-from-frontend
+  namespace: app
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-cache-from-backend
+  namespace: app
+spec:
+  podSelector:
+    matchLabels:
+      app: cache
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: backend
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all
+  namespace: app
+spec:
+  podSelector: {}
+  ingress: []
