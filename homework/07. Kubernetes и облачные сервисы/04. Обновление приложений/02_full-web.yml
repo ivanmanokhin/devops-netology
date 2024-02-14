@@ -1,0 +1,165 @@
+---
+# Web App v1 Config Map
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-v1-cm
+  labels:
+    app: web
+    version: v1
+data:
+  index.html: |
+    <html>
+    <body>
+      <h1>Web App v1</h1>
+    </body>
+    </html>
+
+---
+# Web App v2 Config Map
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-v2-cm
+  labels:
+    app: web
+    version: v2
+data:
+  index.html: |
+    <html>
+    <body>
+      <h1>Web App v2</h1>
+    </body>
+    </html>
+
+---
+# Web App v1 Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: web
+        version: v1
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.19
+          volumeMounts:
+          - name: config-volume
+            mountPath: /usr/share/nginx/html
+      volumes:
+      - name: config-volume
+        configMap:
+          name: web-v1-cm
+
+---
+# Web App v2 Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-v2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: web
+        version: v2
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.20
+          volumeMounts:
+          - name: config-volume
+            mountPath: /usr/share/nginx/html
+      volumes:
+      - name: config-volume
+        configMap:
+          name: web-v2-cm
+
+---
+# Web App v1 Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-v1-svc
+spec:
+  selector:
+    app: web
+    version: v1
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+# Web App v2 Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-v2-svc
+spec:
+  selector:
+    app: web
+    version: v2
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+# Web App v1 Nginx Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-v1-ingress
+  annotations:
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: canary.manokh.in
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: web-v1-svc
+            port:
+              number: 80
+
+---
+# Web App v2 Nginx Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-v2-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-weight: "50"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: canary.manokh.in
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: web-v2-svc
+            port:
+              number: 80
