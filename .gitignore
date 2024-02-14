@@ -38,3 +38,6 @@ key.*
 
 # lock.hcl
 *.lock.hcl
+
+# VSCode
+.vscode
