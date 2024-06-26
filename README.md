@@ -10,4 +10,4 @@
   - [05. CI, мониторинг и управление конфигурациями](homework/05.%20CI,%20мониторинг%20и%20управление%20конфигурациями/)
   - [06. Администрирование и конфигурация Kubernetes](homework/06.%20Администрирование%20и%20конфигурация%20Kubernetes/)
   - [07. Kubernetes и облачные сервисы](homework/07.%20Kubernetes%20и%20облачные%20сервисы/)
-  - [08. Дипломная работа](https://gitlab.com/netology-devops-project/description)
+- [Дипломная работа](https://gitlab.com/netology-devops-project/description)
